@@ -1,0 +1,35 @@
+{
+    "title": "Input schema for Commercial Zoning Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Local Government Portal URLs",
+            "type": "array",
+            "description": "Provide the URLs for the local government portals to monitor for new building permits.",
+            "editor": "requestListSources",
+            "prefill": [
+                {
+                    "url": "https://example-gov.com/permits"
+                }
+            ]
+        },
+        "zones": {
+            "title": "Zoning Areas of Interest",
+            "type": "array",
+            "description": "Specify the zoning areas to focus on (optional).",
+            "editor": "stringArray",
+            "default": [
+                "Commercial",
+                "Industrial",
+                "Mixed-Use"
+            ]
+        },
+        "maxRequestsPerCrawl": {
+            "title": "Maximum Pages to Scrape",
+            "type": "integer",
+            "description": "Limit the number of pages scraped per portal.",
+            "default": 50
+        }
+    }
+}

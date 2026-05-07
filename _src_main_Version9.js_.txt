@@ -1,0 +1,55 @@
+// Import required modules
+import { Actor } from 'apify';
+import { CheerioCrawler, Dataset } from 'crawlee';
+
+await Actor.init();
+
+// Extract input configuration
+const { startUrls = [], zones = [], maxRequestsPerCrawl = 50 } = (await Actor.getInput()) ?? {};
+
+const proxyConfiguration = await Actor.createProxyConfiguration();
+
+// Scraper for local government portals
+const crawler = new CheerioCrawler({
+    proxyConfiguration,
+    maxRequestsPerCrawl,
+    async requestHandler({ enqueueLinks, request, $, log }) {
+        log.info(`Scraping: ${request.loadedUrl}`);
+
+        // Define selectors for permit data (adjust to match the portal's structure)
+        const permits = $('.permit-item'); // Modify this as per HTML structure
+
+        const extractedData = permits.map((index, element) => {
+            const permitType = $(element).find('.permit-type').text().trim();
+            const zone = $(element).find('.permit-zone').text().trim();
+            const address = $(element).find('.permit-address').text().trim();
+            const details = $(element).find('.permit-details').text().trim();
+            const issueDate = $(element).find('.permit-date').text().trim();
+            const url = request.loadedUrl;
+
+            // Filter by zones, if specified
+            if (!zones.length || zones.includes(zone)) {
+                return { permitType, zone, address, details, issueDate, url };
+            }
+
+            return null;
+        })
+        .get()
+        .filter(Boolean); // Remove null values
+
+        // Push valid permits to the dataset
+        for (const data of extractedData) {
+            await Dataset.pushData(data);
+        }
+
+        // Enqueue pagination links
+        await enqueueLinks({
+            selector: '.pagination a', // Update with pagination selector
+        });
+    },
+});
+
+// Start the scraper
+await crawler.run(startUrls);
+
+await Actor.exit();

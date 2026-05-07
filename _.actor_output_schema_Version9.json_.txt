@@ -1,0 +1,11 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Output Schema for Commercial Zoning Scraper",
+    "properties": {
+        "overview": {
+            "type": "string",
+            "title": "Summary Overview",
+            "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+        }
+    }
+}

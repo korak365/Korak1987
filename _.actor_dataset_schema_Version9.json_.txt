@@ -1,0 +1,63 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "permitType": {
+            "type": "string",
+            "title": "Permit Type"
+        },
+        "zone": {
+            "type": "string",
+            "title": "Zone"
+        },
+        "address": {
+            "type": "string",
+            "title": "Address"
+        },
+        "details": {
+            "type": "string",
+            "title": "Permit Details"
+        },
+        "issueDate": {
+            "type": "string",
+            "format": "date",
+            "title": "Permit Issue Date"
+        },
+        "url": {
+            "type": "string",
+            "title": "URL"
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["permitType", "zone", "address", "issueDate", "url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "permitType": {
+                        "label": "Permit Type",
+                        "format": "text"
+                    },
+                    "zone": {
+                        "label": "Zone",
+                        "format": "text"
+                    },
+                    "address": {
+                        "label": "Address",
+                        "format": "text"
+                    },
+                    "issueDate": {
+                        "label": "Permit Issue Date",
+                        "format": "date"
+                    },
+                    "url": {
+                        "label": "Permit URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "actorSpecification": 1,
+    "name": "commercial-zoning-scraper",
+    "title": "Commercial Zoning Scraper",
+    "description": "Scrapes local government portals for data on new building permits, including zoning updates.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "ai-generated-actor",
+        "generatedBy": "copilot-2026"
+    },
+    "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}
